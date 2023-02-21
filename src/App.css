@@ -1,0 +1,14 @@
+body{
+  background-color: #28282B;
+  color: #fff;
+}
+
+.cards__container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.heading{
+  text-align: center;
+}
