@@ -1,18 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 const { getData } = require("./db/db");
+const { getCats } = require("./db/Cats")
 const foods = getData();
-
-const tele = window.Telegram.WebApp;
+const cats = getCats();
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    tele.ready();
-  });
 
   const onAdd = (food) => {
     const exist = cartItems.find((x) => x.id === food.id);
@@ -40,21 +36,21 @@ function App() {
     }
   };
 
-  const onCheckout = () => {
-    tele.MainButton.text = "Pay :)";
-    tele.MainButton.show();
-  };
-
   return (
     <>
       <h1 className="heading">Order Food</h1>
-      <Cart cartItems={cartItems} onCheckout={onCheckout}/>
+      <Cart cartItems={cartItems} />
       <div className="cards__container">
-        {foods.map((food) => {
+        {cats.map((cat) => {
           return (
-            <Card food={food} key={food.id} onAdd={onAdd} onRemove={onRemove} />
+            <Card item={cat} key={cat.id} isCat={cat.isCat} onAdd={onAdd} onRemove={onRemove} />
           );
         })}
+        {/* {foods.map((food) => {
+          return (
+            <Card food={food} key={food.id} onAdd={onAdd} onRemove={onRemove} isCat={false} />
+          );
+        })} */}
       </div>
     </>
   );
